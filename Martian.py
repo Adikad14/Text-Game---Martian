@@ -29,7 +29,7 @@ def komenda():      # Main menu for commands
     dozwolone_polecenia = ['idź', 'badaj', 'zbadaj', 'wyjdź', 'popatrz', 'rusz się', 'biegnij', 'opisz', 'misje', 'misja', 'wykonaj misje', 'skontaktuj się z nasa', 'skontaktuj', 'przygotuj', '']
     while polecenie.lower() not in dozwolone_polecenia:
         print_wolno('''Proszę wpisać poprawną komendę: idź, zbadaj, opisz, misje, wykonaj misje (lub poprostu czynność np: skontaktuj),
-         \n'''')
+         \n''')
         polecenie = input('> ')
     if polecenie.lower() == 'wyjdź':
         sys.exit()
