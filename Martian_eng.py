@@ -20,74 +20,73 @@ def print_location():  # Def for printing players location
     print('\n')
     print_slowly2(('Location: ' + map[player.location][Name]))
     print('\n')
-    print_slowly2(('De: ' + map[player.location][Description]))
+    print_slowly2(('Description: ' + map[player.location][Description]))
     print('\n')
 
 
 def command():  # Main menu for commands
     print('\n')
-    print_slowly('Co chciałbyś zrobić?\n')
+    print_slowly('What you want to do?\n')
     prompt = input('> ')
-    permitted_prompt = ['idź', 'badaj', 'zbadaj', 'wyjdź', 'popatrz', 'rusz się', 'biegnij', 'opisz', 'misje',
-                           'misja', 'wykonaj misje', 'skontaktuj się z nasa', 'skontaktuj', 'przygotuj', ]
+    permitted_prompt = ['go', 'move', 'look', 'describe', 'examine', 'mission', 'missions', 'complete the mission', 'complete mission', 'contact with nasa', 'contact', 'wait', 'get ready', 'exit']
     while prompt.lower() not in permitted_prompt:
-        print_slowly('''Proszę wpisać poprawną komendę:
-idź, zbadaj, opisz, misje, wykonaj misje (lub czynność np: skontaktuj)\n''')
+        print_slowly('''Enter valid command:
+go, describe, examine, mission, complete the mission.\n''')
         prompt = input('> ')
-    if prompt.lower() == 'wyjdź':
+    if prompt.lower() == 'exit':
         sys.exit()
-    elif prompt.lower() in ['idź', 'rusz się', 'biegnij']:
+    elif prompt.lower() in ['go', 'move']:
         player_movement()
-    elif prompt.lower() in ['popatrz', 'opisz']:
+    elif prompt.lower() in ['look', 'describe']:
         player_description()
-    elif prompt.lower() in ['badaj', 'zbadaj']:
+    elif prompt.lower() in ['examine']:
         player_examine()
-    elif prompt.lower() in ['misje', 'misja']:
+    elif prompt.lower() in ['mission', 'missions']:
         current_mission()
-    elif prompt.lower() == 'wykonaj misje':
+    elif prompt.lower() == ['complete the mission', 'complete mission']:
         if player.completed_missions == 0:
             mission_01()
         elif player.completed_missions == 1:
             mission_02()
-    elif prompt.lower() in ['skontaktuj się z nasa', 'skontaktuj']:
+    elif prompt.lower() in ['contact with nasa', 'contact']:
         if player.completed_missions == 0:
             mission_01()
-    elif prompt.lower() == 'przygotuj':
+    elif prompt.lower() == ['wait', 'get ready']:
         if player.completed_missions == 1:
             mission_02()
 
 
 def current_mission():  # Def for printing actual mission
     if player.completed_missions == 0:
-        print_slowly('Spróbuj skontaktować się z NASA za pomocą komputera.')
+        print_slowly('Try to contact with NASA.')
         command()
     if player.completed_missions == 1:
-        print_slowly('Przygotuj się na przyjście burzy')
+        print_slowly('Get ready for the storm.')
         command()
     # if player.misja_wyknane == 2:
     # print_wolno((''))
 
 
 def player_movement():  # Def for player movement
-    question = 'Gdzie chciałbyś pójść?\n'
+    question = 'Where do you want to go?\n'
     place = input(question)
-    if place in ['up', 'północ']:
+    if place in ['up', 'north']:
         destination = map[player.location][up]
         ruch(destination)
-    elif place in ['left', 'zachód']:
+    elif place in ['left', 'west']:
         destination = map[player.location][left]
         ruch(destination)
-    elif place in ['right', 'wschód']:
+    elif place in ['right', 'east']:
         destination = map[player.location][right]
         ruch(destination)
-    elif place in ['down', 'południe']:
+    elif place in ['down', 'south']:
         destination = map[player.location][down]
         ruch(destination)
 
 
 def ruch(destination):
     loading()
-    print('\n' + "Poruszyłeś się do " + destination + '.')
+    print('\n' + "You moved to: " + destination + '.')
     player.location = destination
     print_location()
     command()
@@ -101,10 +100,10 @@ def player_description():  # Def for "opisz", in english: 'review' or 'descripti
 
 def player_examine():  # Def for "zbadaj", in english: "examine"
     if player.completed_missions == 0:
-        print_slowly('Rozglądając się po wszystkim co jest w bazie, spostrzegasz na monitorze nową wiadomość od NASA.')
+        print_slowly('Looking around everything that is in the base, you notice a new message from NASA on the monitor.')
         command()
     elif player.completed_missions == 1:
-        print_slowly('Narazie niema drugiej misji, poczekaj na update.')
+        print_slowly('No.')
         command()
     else:
         print(map[player.location][Badanie])
@@ -124,27 +123,27 @@ right = 'right', 'east'
 
 map = {
     'a1': {
-        Name: "Sektor A1",
-        Description: 'Teren blisko bazy na którym narazie niema nic ciekawego, tylko piach i kamienie.',
-        Badanie: 'Nic nowego.',
+        Name: "Sector A1",
+        Description: 'Nothing, but rocks and a lot of sand.',
+        Badanie: 'Nothing new.',
         up: '',
         down: 'a2',
         left: '',
         right: 'b1',
     },
     'a2': {
-        Name: "Parking dla łaźików",
-        Description: 'Tutaj powinny znajdować się wszystkie łaźiki.',
-        Badanie: 'Wszystko jest bez zmian.',
+        Name: "Parking for rovers",
+        Description: 'All rovers should be here.',
+        Badanie: 'Everything is unchanged.',
         up: 'a1',
         down: 'a3',
         left: '',
         right: 'b2',
     },
     'a3': {
-        Name: "Sektor A3",
-        Description: 'Teren blisko bazy na którym narazie niema nic ciekawego, tylko piach i kamienie.',
-        Badanie: 'Nic ciekawego.',
+        Name: "Sector A3",
+        Description: 'Nothing, but rocks and a lot of sand.',
+        Badanie: 'Nothing interesting.',
         up: 'a2',
         down: '',
         left: '',
@@ -152,53 +151,53 @@ map = {
     },
     'b1': {
         Name: "MAV - Mars Ascent Vehicle",
-        Description: 'Miejsce nieopodal bazy, gdzie znajduje się MAV.',
-        Badanie: 'Wszystko wygląda tak jak zawsze.',
+        Description: 'A place near the base where the MAV is located.',
+        Badanie: 'Everything looks like always.',
         up: '',
         down: 'b2',
         left: 'a1',
         right: 'c1',
     },
     'b2': {
-        Name: "Baza",
-        Description: 'To jest twoja główna baza, jedyne bezpieczne miejsce na tej planecie.',
-        Badanie: 'Nic nadzwyczajnego, żadnych nowości.',
+        Name: "Hab",
+        Description: 'This is your main base, the only safe place on this planet.',
+        Badanie: 'Nothing extraordinary, no news.',
         up: 'b1',
         down: 'b3',
         left: 'a2',
         right: 'c2',
     },
     'b3': {
-        Name: "Miejsce do zagospodarowania.",
-        Description: 'Zwykły plac przygotowany na przyszłe konstrukcje.',
-        Badanie: 'Wygląda w normie.',
+        Name: "A place to manage.",
+        Description: 'An ordinary square prepared for future constructions.',
+        Badanie: 'Looks normal.',
         up: 'b2',
         down: '',
         left: 'a3',
         right: 'c3',
     },
     'c1': {
-        Name: "Sektor C1",
-        Description: 'Teren blisko bazy na którym narazie niema nic ciekawego, tylko piach i kamienie.',
-        Badanie: 'Wygląda jak zawsze.',
+        Name: "Sector C1",
+        Description: 'Nothing, but rocks and a lot of sand.',
+        Badanie: 'It looks like always.',
         up: '',
         down: 'c2',
         left: 'b1',
         right: '',
     },
     'c2': {
-        Name: "Panele słoneczne",
-        Description: 'Tutaj znajdują się wszystkie potrzebne panele słoneczne, które zasilają bazę.',
-        Badanie: 'Wszystko wygląda niezmiennie.',
+        Name: "Solar panels",
+        Description: 'Here you will find all the solar panels that need to feed the base.',
+        Badanie: 'Everything looks invariably.',
         up: 'c1',
         down: 'c3',
         left: 'b2',
         right: '',
     },
     'c3': {
-        Name: "Sektor C3",
-        Description: 'Teren blisko bazy na którym narazie niema nic ciekawego, tylko piach i kamienie.',
-        Badanie: 'Nic nowego.',
+        Name: "Sector C3",
+        Description: 'Nothing, but rocks and a lot of sand.',
+        Badanie: 'Nothing new.',
         up: 'c2',
         down: '',
         left: 'b3',
@@ -211,20 +210,20 @@ map = {
 # - Menu - #
 def main_menu_choose():  # Main menu
     choice = input("> ")
-    if choice == "start":
+    if choice == "play":
         start_scene()
-    elif choice.lower() == "pomoc":
+    elif choice.lower() == "help":
         menu_help()
-    elif choice.lower() == "wyjdź":
+    elif choice.lower() == "exit":
         sys.exit()
-    while choice.lower() not in ['start', 'pomoc', 'wyjdź']:
-        print('Proszę wpisać poprawną komendę.')
+    while choice.lower() not in ['play', 'help', 'exit']:
+        print('Please enter valid command.')
         choice = input("> ")
-        if choice == "start":
+        if choice == "play":
             command()
-        elif choice.lower() == "pomoc":
+        elif choice.lower() == "help":
             menu_help()
-        elif choice.lower() == "wyjdź":
+        elif choice.lower() == "exit":
             sys.exit()
 
 
@@ -241,12 +240,12 @@ Game created by: Jakub "Adikad" Skrzypczak.\n''')
 
 def main_menu():  # Main menu, visual condition
     os.system('cls')
-    print('#########################')
-    print('#Witaj w grze tekstowej!#')
-    print('#       - Start -       #')
-    print('#       - Pomoc -       #')
-    print('#       - Wyjdź -       #')
-    print('#########################')
+    print('###########################')
+    print('#Welcome to the text game!#')
+    print('#         - Play -        #')
+    print('#         - Help -        #')
+    print('#         - Exit -        #')
+    print('###########################')
     main_menu_choose()
 
 
@@ -282,52 +281,53 @@ def loading():  # Def for "loading"
 # - Scenes - #
 
 def game_over():  # Def for game over
-    print_slowly('Ukończyłeś grę, a przynajmniej tę ścieżkę historii')
+    print_slowly('You have completed the game, at least this path of history.')
     time.sleep(2)
     sys.exit()
 
 
 def mission_01():  # First mission, contacting with NASA
     if player.location not in 'b2':
-        print('Aby skontaktować się z NASA, musisz znajdować się w bazie głównej.')
+        print('To contact NASA, you must be in the Hab.')
         command()
     else:
-        print_slowly2('Komunikujesz się z NASA')
+        print_slowly2('You are communicating with NASA')
         loading()
-        print_slowly2('Brawo! Udało Ci się nawiązać kontakt.\n')
-        print_slowly2(('''NASA:--> Przyszyły do nas informacje, iż w kierunku Twojej lokalizacji zmierza burza piaskowa.
-Nie stanowi zagrożenia dla misji, lecz prace na zewnątrz muszą być przerwane do odwołania.'''))
+        print_slowly2('Bravo! You have made contact.\n')
+        print_slowly2(('''NASA:--> Information has come to us that a sandstorm is heading towards your location.
+It does not pose a threat to the mission, but outside work must be discontinued until further notice.'''))
         player.completed_missions = player.completed_missions + 1
         command()
 
 
 def mission_02():  # Second mission, waiting for storm
     if player.location in 'b2':
-        print_slowly('Przygotowywujesz się na burzę.\n')
+        print_slowly('You are preparing for the storm.\n')
         mission_03()
     else:
-        print_slowly('Aby przeczekać burzę musisz być w bazie.\n')
+        print_slowly('To wait out the storm you have to be in the Hab.\n')
         command()
 
 
 def mission_03():  # Third mission, storm gets dangerous
-    print_slowly(('''NASA:--> Burza znajdująca się w Twojej lokalizacji osiąga prędkości które mogą być niebezpieczne prawidłowego funkcjonowania bazy i MAV.
-Decyzja o anulowaniu misji należy do Ciebie.\n'''))
+    print_slowly(('''NASA:--> The storm located in your location reaches speeds that can be dangerous
+for the proper operation of the base and MAV.
+The decision to cancel the mission is yours.\n'''))
     decision_01()
 
 
 def decision_01():  # First decission about story
-    print_slowly('Wpisz "zostań", jeśli chcesz zostać, lub "anuluj", jeśli chcesz anulować misję.\n')
+    print_slowly('Enter "stay" if you want to stay or "cancel" if you want to cancel the mission.\n')
     decision_01_choose = input('> ')
-    if decision_01_choose in ['zostań', 'zostan']:
-        print_slowly('Wybrałeś aby zostać na Marsie.\n')
+    if decision_01_choose in ['stay']:
+        print_slowly('You chose to stay on Mars.\n')
         time.sleep(1)
         command()
-    if decision_01_choose in ['anuluj']:
-        print_slowly('Wybrałeś aby anulować misję.\n')
+    if decision_01_choose in ['cancel']:
+        print_slowly('You have chosen to cancel the mission.\n')
         game_over()
     else:
-        print_slowly('Proszę wybrać poprawną komendę.\n')
+        print_slowly('PPlease choose the correct command.\n')
 
 
 def start_scene():  # First scene, this is where game begins
